@@ -3,10 +3,10 @@ import { FormFields } from './useForm';
 
 export type FormSubmitProps = {
   walletAddress: string | null;
-  paymentStatus: string;
+  paymentStatus?: string;
   exportedFile: File | null;
   formValues: FormFields;
-  onFormSubmit: (data: {chain: string, requestOptions: RequestInit}) => void;
+  onFormSubmit?: (data: {chain: string, requestOptions: RequestInit}) => void;
 };
 
 const useFormSubmit = ({ walletAddress, paymentStatus, exportedFile, formValues, onFormSubmit }: FormSubmitProps) => {

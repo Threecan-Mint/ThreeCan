@@ -6,13 +6,24 @@ import { SelectField } from './form/SelectField';
 import { FormFields } from './form/useForm';
 import { FormSubmitProps } from './form/useFormSubmit';
 
-interface NFTFormComponentProps extends FormSubmitProps {
-  initialFormState: FormFields;
+interface NFTFormComponentProps extends Omit<FormSubmitProps, 'formValues' | 'onFormSubmit'> {
+  walletAddress: string | null;
+  exportedFile: File | null;
+  paymentStatus: string;
 }
 
-export const NFTForm: FC<NFTFormComponentProps> = ({ initialFormState, ...formSubmitProps }) => {
+export const NFTForm: FC<NFTFormComponentProps> = ({ walletAddress, exportedFile, paymentStatus, ...formSubmitProps }) => {
+  // Define the initial form state
+  const initialFormState: FormFields = {
+    chain: 'polygon',
+    name: '',
+    description: '',
+    mint_to_address: walletAddress || '',
+    file: exportedFile || null,
+  };
+
   const { formValues, handleInputChange } = useForm(initialFormState);
-  const handleFormSubmit = useFormSubmit({ ...formSubmitProps, formValues });
+  const handleFormSubmit = useFormSubmit({ ...formSubmitProps, formValues, walletAddress, exportedFile });
 
   return (
     <form onSubmit={handleFormSubmit}>
