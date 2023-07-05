@@ -1,7 +1,7 @@
 /** @type {import('ts-jest').JestConfigWithTsJest} */
 module.exports = {
   preset: 'ts-jest',
-  testEnvironment: 'node',
-  testRegex: '(/tests/.*|(\\.|/)(tests))\\.ts?$',
+  testEnvironment: 'jsdom',
+  testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$',
   modulePathIgnorePatterns: ['./build/', './node_modules/'],
 };
