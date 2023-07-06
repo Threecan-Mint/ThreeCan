@@ -35,8 +35,9 @@ const useFormSubmit = ({ walletAddress, paymentStatus, exportedFile, formValues,
       },
       body: formData,
     };
-
-    onFormSubmit({ chain: formValues.chain, requestOptions });
+    if (onFormSubmit) {
+      onFormSubmit({ chain: formValues.chain, requestOptions });
+    }
   };
 
   return handleFormSubmit;

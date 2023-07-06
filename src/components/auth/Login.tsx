@@ -1,10 +1,15 @@
-import { useAuth0 } from "@auth0/auth0-react";
-import React,{FC} from "react";
+// LoginButton.tsx
+import React, { FC } from "react";
+import { useAuthentication } from "./useAuthentication";
 
-const LoginButton:FC = () => {
-  const { loginWithRedirect } = useAuth0();
+const LoginButton: FC = () => {
+  const { isAuthenticating, initiateAuthenticationFlow } = useAuthentication();
 
-  return <button onClick={() => loginWithRedirect()}>Log In</button>;
+  return (
+    <button onClick={initiateAuthenticationFlow} disabled={isAuthenticating}>
+      {isAuthenticating ? "Authenticating..." : "Log In"}
+    </button>
+  );
 };
 
 export default LoginButton;

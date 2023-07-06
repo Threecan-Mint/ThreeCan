@@ -10,8 +10,8 @@ function render() {
   root.render(
     <AppUiProvider>
       <Auth0Provider
-        domain="{yourDomain}"
-        clientId="{yourClientId}"
+        domain="dev-w4zhjgbo6zvcc1xf.us.auth0.com"
+        clientId="JKp0NLtrAQoLf3xYUT7lJFlaVI9gTJoZ"
         authorizationParams={{
           redirect_uri: window.location.origin,
         }}
