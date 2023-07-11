@@ -14,6 +14,7 @@ function render() {
         clientId="JKp0NLtrAQoLf3xYUT7lJFlaVI9gTJoZ"
         authorizationParams={{
           redirect_uri: window.location.origin,
+          response_type: "code",
         }}
       >
         <App />
