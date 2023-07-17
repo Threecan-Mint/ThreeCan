@@ -1,9 +1,21 @@
 // LoginButton.tsx
-import React, { FC } from "react";
-import { useAuthentication } from "./useAuthentication";
+import React, { FC, useState } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const LoginButton: FC = () => {
-  const { isAuthenticating, initiateAuthenticationFlow } = useAuthentication();
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
+  const { loginWithRedirect } = useAuth0();
+
+  const initiateAuthenticationFlow = async () => {
+    console.log("initiateAuthenticationFlow");
+    setIsAuthenticating(true);
+    try {
+      await loginWithRedirect();
+    } catch (error) {
+      console.error(error);
+      setIsAuthenticating(false);
+    }
+  };
 
   return (
     <button onClick={initiateAuthenticationFlow} disabled={isAuthenticating}>
@@ -13,5 +25,3 @@ const LoginButton: FC = () => {
 };
 
 export default LoginButton;
-
-
