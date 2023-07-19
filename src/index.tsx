@@ -3,22 +3,22 @@ import * as React from "react";
 import { createRoot } from "react-dom/client";
 import App from "./app";
 import "@canva/app-ui-kit/styles.css";
-import { Auth0Provider } from "@auth0/auth0-react";
+// import { Auth0Provider } from "@auth0/auth0-react";
 
 const root = createRoot(document.getElementById("root")!);
 function render() {
   root.render(
     <AppUiProvider>
-      <Auth0Provider
-        domain="https://us-central1-atomic-saga-392809.cloudfunctions.net"
+      {/* <Auth0Provider
+        domain="https://us-central1-atomic-saga-392809.cloudfunctions.net/authorize"
         clientId="JKp0NLtrAQoLf3xYUT7lJFlaVI9gTJoZ"
         authorizationParams={{
-          redirect_uri: window.location.origin,
+          redirect_uri: "https://us-central1-atomic-saga-392809.cloudfunctions.net/redirection",
           response_type: "code",
         }}
-      >
+      > */}
         <App />
-      </Auth0Provider>
+      {/* </Auth0Provider> */}
     </AppUiProvider>
   );
 }
