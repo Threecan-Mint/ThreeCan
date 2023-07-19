@@ -1,5 +1,5 @@
 // AuthenticatedApp.tsx
-import React from 'react';
+import React from "react";
 import { FormField, MultilineInput } from "@canva/app-ui-kit";
 import WalletConnection from "./components/WalletConnection";
 import ExportDesign from "./components/ExportDesign";

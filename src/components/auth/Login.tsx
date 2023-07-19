@@ -1,9 +1,17 @@
 // LoginButton.tsx
 import React, { FC } from "react";
-import { useAuthentication } from "./useAuthentication";
+// import { useAuthentication } from "./useAuthentication";
 
-const LoginButton: FC = () => {
-  const { isAuthenticating, initiateAuthenticationFlow } = useAuthentication();
+type LoginButtonProps = {
+  isAuthenticating: boolean;
+  initiateAuthenticationFlow: () => void;
+};
+
+const LoginButton: FC = ({
+  isAuthenticating,
+  initiateAuthenticationFlow,
+}: LoginButtonProps) => {
+  // const { isAuthenticating, initiateAuthenticationFlow } = useAuthentication();
 
   return (
     <button onClick={initiateAuthenticationFlow} disabled={isAuthenticating}>
