@@ -7,12 +7,14 @@ import NFTForm from "./components/NFTForm";
 import Profile from "./components/auth/Profile";
 import LogoutButton from "./components/auth/Logout";
 import useAppState from "./useAppState";
+import { Rows, Text } from "@canva/app-ui-kit";
 
 const AuthenticatedApp: React.FC = () => {
   const { state, setExportData, setWalletAddress } = useAppState();
 
   return (
     <>
+      <Text>To create an NFT, link your wallet,</Text>
       <Profile />
       <LogoutButton />
       <WalletConnection
