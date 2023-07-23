@@ -7,10 +7,7 @@ import useAppState from "src/useAppState";
 export const useAuthentication = () => {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
   const { setAuth } = useAppState();
-  const GCF_VERIFY_TOKEN_URL =
-    "https://us-central1-atomic-saga-392809.cloudfunctions.net/verify-token";
-  // const { loginWithRedirect } = useAuth0();
-
+ 
   const verifyToken = async () => {
     try {
       setIsAuthenticating(true);
@@ -18,7 +15,7 @@ export const useAuthentication = () => {
 
       if (!token) return;
 
-      const jsonResponse = await fetch(GCF_VERIFY_TOKEN_URL, {
+      const jsonResponse = await fetch(`${BACKEND_HOST}/verify-token`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

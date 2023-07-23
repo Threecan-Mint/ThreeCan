@@ -1,5 +1,5 @@
 {
-  "name": "canva-apps-sdk-starter-kit",
+  "name": "ThreeCan",
   "description": "A boilerplate for creating Canva Apps.",
   "engines": {
     "node": "^18",
@@ -16,7 +16,7 @@
     "test:watch": "jest --no-cache --watch"
   },
   "keywords": [],
-  "author": "Canva Pty Ltd.",
+  "author": "ThreeCan",
   "license": "SEE LICENSE IN LICENSE.md",
   "private": true,
   "dependencies": {
