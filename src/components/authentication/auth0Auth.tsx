@@ -1,5 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { useAppState } from "src/useAppState";
+import useAppState from "../../useAppState";
 
 export const useAuth0Auth = () => {
   const { updateState } = useAppState();
