@@ -1,6 +1,6 @@
 // LoginButton.tsx
 import React from "react";
-import { useAuthentication } from "./useAuthentication";
+import { useAuthentication } from "../authentication/useAuthenticationOlder";
 
 const LoginButton = () => {
   const { isAuthenticating, initiateAuthenticationFlow } = useAuthentication();

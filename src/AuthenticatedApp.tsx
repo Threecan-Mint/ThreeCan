@@ -10,8 +10,8 @@ import useAppState from "./useAppState";
 import { Rows, Text } from "@canva/app-ui-kit";
 
 const AuthenticatedApp: React.FC = () => {
-  const { state, setExportData, setWalletAddress } = useAppState();
-
+  const { state, updateState } = useAppState();
+  console.log("Authenticated State:",state.auth)
   return (
     <>
       <Text>To create an NFT, link your wallet,</Text>
@@ -19,9 +19,9 @@ const AuthenticatedApp: React.FC = () => {
       <LogoutButton />
       <WalletConnection
         walletAddress={state.walletAddress}
-        setWalletAddress={setWalletAddress}
+        setWalletAddress={(address) => updateState({ walletAddress: address })}
       />
-      <ExportDesign setExportedFile={setExportData} />
+      <ExportDesign setExportedFile={(file) => updateState({ exportData: file })} />
       <NFTForm
         exportedFile={state.exportData}
         walletAddress={state.walletAddress}

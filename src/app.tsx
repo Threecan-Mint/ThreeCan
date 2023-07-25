@@ -1,30 +1,26 @@
-// App.tsx
 import React, { useEffect } from "react";
 import { Rows, Text } from "@canva/app-ui-kit";
-import LoginButton from "./components/auth/Login";
 import styles from "styles/components.css";
 import AuthenticatedApp from "./AuthenticatedApp";
-// import { useAuth0 } from "@auth0/auth0-react";
-import { auth } from "@canva/user";
 import useAppState from "./useAppState";
+import { useAuthentication } from "./components/authentication/useAuthenticationOlder";
 
 const App: React.FC = () => {
-  // const { isAuthenticated } = useAuth0();
   const { state } = useAppState();
+  const { initiateAuthenticationFlow } = useAuthentication();
 
   useEffect(() => {
-    const getToken = async () => {
-      const token = await auth.getCanvaUserToken();
-      console.log("token: ", token);
-    };
-    getToken();
+    if(!state.auth.isAuthenticated) {
+      initiateAuthenticationFlow();
+    }
+    console.log(state.auth)
   }, []);
 
   return (
     <div className={styles.scrollContainer}>
       <Rows spacing="2u">
         <Text>To create an NFT, link your wallet,</Text>
-        {state.auth.isAuthenticated ? <AuthenticatedApp /> : <LoginButton />}
+        {state.auth.isAuthenticated ? <AuthenticatedApp /> : <div>this hasn't loaded {state.auth}</div>}
       </Rows>
     </div>
   );
