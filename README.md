@@ -2,7 +2,101 @@
 
 Welcome to the MintNFT starter kit for Canva's app development platform. This kit is designed to help you mint designs from Canva into NFTs swiftly and efficiently. 🎉
 
+### Get Things Done with Authentication Flow
 
+- Store State Locally (Done)
+- AppState stores isAuthenticating
+- Try That.
+- 
+
+
+Newest Design
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant App
+    participant Auth0Hook
+    participant CanvaHook
+    participant CloudFunction
+    participant AuthService
+    participant CanvaService
+    participant Database
+    User->>App: Accesses application
+    App->>Auth0Hook: Checks authentication state
+    Auth0Hook->>CloudFunction: Sends Auth0 token for verification
+    CloudFunction->>AuthService: Verifies Auth0 token
+    AuthService-->>CloudFunction: Returns verification status
+    alt Auth0 Token is Valid
+        CloudFunction->>Database: Fetch user record
+        Database-->>CloudFunction: Returns user record
+        CloudFunction->>Auth0Hook: Returns user authentication status
+    else Auth0 Token is Invalid
+        CloudFunction->>AuthService: Requests Auth0 token refresh
+        AuthService-->>CloudFunction: Returns new Auth0 token
+        CloudFunction->>Database: Updates user record with new Auth0 token
+        Database-->>CloudFunction: Returns updated user record
+        CloudFunction->>Auth0Hook: Returns user authentication status
+    end
+    Auth0Hook-->>App: Updates authentication state
+    App-->>CanvaHook: Checks Canva authentication state
+    CanvaHook->>CloudFunction: Sends Canva token for verification
+    CloudFunction->>CanvaService: Verifies Canva token
+    CanvaService-->>CloudFunction: Returns verification status
+    alt Canva Token is Valid
+        CloudFunction->>Database: Fetch Canva user data
+        Database-->>CloudFunction: Returns Canva user data
+        CloudFunction->>CanvaHook: Returns Canva authentication status
+    else Canva Token is Invalid
+        CloudFunction->>CanvaService: Requests Canva token refresh
+        CanvaService-->>CloudFunction: Returns new Canva token
+        CloudFunction->>Database: Updates user record with new Canva token
+        Database-->>CloudFunction: Returns updated user record
+        CloudFunction->>CanvaHook: Returns Canva authentication status
+    end
+    CanvaHook-->>App: Updates Canva authentication state
+    App-->>User: Renders authenticated or non-authenticated view
+
+
+```
+
+
+Current Design
+
+```mermaid
+graph TB
+  client(["Client<br>React"]) --> Auth0
+  client -->|verify-token| functions1(["Cloud Function<br>Verify Token"])
+  Auth0 -->|auth/redirect| functions2(["Cloud Function<br>Redirect"])
+  functions1 -->|Get User Record| PG(["PostgreSQL<br>Database"])
+  functions1 -->|Verify JWT| JWKS(["JWKS Client<br>Jwks-rsa"])
+  functions2 -->|Save Tokens| PG
+  functions1 -->|Fetch User Info| userInfo["Auth0<br>/userinfo"]
+  functions1 -->|Refresh Token| refreshToken["Auth0<br>/oauth/token"]
+  PG -->|Update Token| functions1
+  refreshToken -.->|Update Token| functions1
+```
+
+Canva Recommended
+```mermaid
+
+sequenceDiagram
+participant User as User
+participant Frontend as Frontend
+participant Backend as Backend
+participant Canva as Canva
+
+User->>Frontend: Start app 
+Frontend->>Canva: Request Canva user token
+Canva-->>Frontend: Return Canva user token
+Frontend->>Backend: Send token to backend
+Backend->>Canva: Validate token with Canva
+Canva-->>Backend: Confirm token validity
+Backend->>Frontend: Confirm user authentication 
+Frontend-->>User: Allow/Deny access to app features 
+
+
+```
 
 Welcome to the **Apps SDK starter kit** for Canva's app development platform. 🎉
 
