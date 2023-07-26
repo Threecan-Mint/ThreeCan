@@ -45,7 +45,7 @@ function TestComponent(props) {
   return (
     <div>
       <div>Authenticating: {auth.isAuthenticating.toString()}</div>
-      <div>Auth State: {JSON.stringify(auth.authState)}</div>
+      <div>Auth State: {auth.isAuthenticating}</div>
     </div>
   );
 }
