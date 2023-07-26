@@ -1,15 +1,18 @@
 // useAuthentication.ts
 import { useState, useEffect } from "react";
-// import { useAuth0 } from "@auth0/auth0-react";
+import { useDispatch, useSelector } from "react-redux";
+import { setAuth } from "src/store/slices/auth";
 import { auth } from "@canva/user";
-import useAppState from "src/useAppState";
+import { RootState } from "src/store";
 
 export const useAuthentication = () => {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
-  const { setAuth } = useAppState();
+  const { isAuthenticated, isLoggedOut } = useSelector(
+    (state: RootState) => state.auth
+  );
+  const disptach = useDispatch();
   const GCF_VERIFY_TOKEN_URL =
     "https://us-central1-atomic-saga-392809.cloudfunctions.net/verify-token";
-  // const { loginWithRedirect } = useAuth0();
 
   const verifyToken = async () => {
     try {
@@ -24,17 +27,13 @@ export const useAuthentication = () => {
         },
       });
 
-      console.log("token: ", token);
-
       const response = await jsonResponse.json();
 
       if (response?.isAuthenticated) {
-        // user is authenticated
-        setAuth(response);
-        setIsAuthenticating(false);
+        disptach(setAuth(response));
       }
 
-      console.log("response: ", response);
+      setIsAuthenticating(false);
     } catch (error) {
       console.error("Error while authenticating the user: ", error);
       setIsAuthenticating(false);
@@ -42,7 +41,9 @@ export const useAuthentication = () => {
   };
 
   useEffect(() => {
-    verifyToken();
+    if (!isAuthenticated && !isLoggedOut) {
+      verifyToken();
+    }
   }, []);
 
   const initiateAuthenticationFlow = async () => {
@@ -50,7 +51,6 @@ export const useAuthentication = () => {
     try {
       const response = await auth.requestAuthentication();
       if (response.status === "COMPLETED") {
-        // loginWithRedirect();
         verifyToken();
       } else {
         setIsAuthenticating(false);

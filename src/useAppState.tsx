@@ -1,18 +1,10 @@
 import { useState } from "react";
 
-interface Auth {
-  isAuthenticated: boolean;
-  data?: {
-    [key: string]: string;
-  };
-}
-
 interface AppState {
   isLoading: boolean;
   exportData: File | null;
   responseData: any;
   walletAddress: string | null;
-  auth: Auth;
 }
 
 const useAppState = () => {
@@ -21,10 +13,6 @@ const useAppState = () => {
     exportData: null,
     responseData: null,
     walletAddress: null,
-    auth: {
-      isAuthenticated: false,
-      data: {},
-    },
   });
 
   const setExportData = (data: File | null) => {
@@ -43,17 +31,12 @@ const useAppState = () => {
     setState((prevState) => ({ ...prevState, isLoading }));
   };
 
-  const setAuth = (auth: Auth) => {
-    setState((prevState) => ({ ...prevState, auth }));
-  };
-
   return {
     state,
     setExportData,
     setResponseData,
     setWalletAddress,
     setIsLoading,
-    setAuth,
   };
 };
 
