@@ -1,5 +1,5 @@
 // App.tsx
-import React from "react";
+import React,{useEffect} from "react";
 import { Rows, Text } from "@canva/app-ui-kit";
 import LoginButton from "./components/auth/Login";
 import styles from "styles/components.css";
@@ -10,8 +10,13 @@ import { useAuthentication } from "./components/auth/useAuthentication";
 
 const App = () => {
   const auth = useSelector((state: RootState) => state.auth);
-  const { isAuthenticating, initiateAuthenticationFlow } = useAuthentication();
+  const {initiateAuthenticationFlow } = useAuthentication();
 
+  useEffect(() => {
+    if(!auth.isAuthenticated) {
+      initiateAuthenticationFlow();
+    }
+  }, []);
   return (
     <div className={styles.scrollContainer}>
       <Rows spacing="2u">
@@ -19,10 +24,7 @@ const App = () => {
         {auth.isAuthenticated ? (
           <AuthenticatedApp />
         ) : (
-          <LoginButton
-            isAuthenticating={isAuthenticating}
-            initiateAuthenticationFlow={initiateAuthenticationFlow}
-          />
+          <div>Loading...</div>
         )}
       </Rows>
     </div>

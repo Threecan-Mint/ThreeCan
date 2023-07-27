@@ -17,7 +17,6 @@ const Profile = (props: ProfileProps) => {
 
   return isAuthenticated && data ? (
     <div>
-      <img src={data?.picture} alt={data?.name} />
       <h2>{data?.name}</h2>
       <p>{data?.email}</p>
     </div>
