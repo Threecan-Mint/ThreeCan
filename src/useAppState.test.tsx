@@ -7,7 +7,6 @@ const defaultState = {
   exportData: null,
   responseData: null,
   walletAddress: null,
-  auth: { isAuthenticated: false, data: {} },
 };
 describe('useAppState', () => {
   const testCases = [
@@ -43,7 +42,7 @@ describe('useAppState', () => {
     },
     {
       description: 'should reset to the default state when updateState is called with the default state',
-      initialActions: [result => result.updateState({ isLoading: true, walletAddress: '0xabc', auth: { isAuthenticated: true, data: { token: 'fake_token' } } })],
+      initialActions: [result => result.updateState({ isLoading: true, walletAddress: '0xabc' })],
       updates: [defaultState],
       finalState: defaultState,
     },

@@ -5,8 +5,6 @@ import { logOut } from "src/store/slices/auth";
 
 const LogoutButton = () => {
   const dispatch = useDispatch();
-  const GCF_LOG_OUT_URL =
-    "https://us-central1-atomic-saga-392809.cloudfunctions.net/logout";
 
   const onLogOut = async () => {
     try {
@@ -14,7 +12,7 @@ const LogoutButton = () => {
 
       if (!token) return;
 
-      const jsonResponse = await fetch(GCF_LOG_OUT_URL, {
+      const jsonResponse = await fetch(`${BACKEND_HOST}/logout`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
