@@ -1,17 +1,46 @@
-import { useEffect, useState } from "react";
+// useAuthentication.ts
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setAuth } from "src/store/slices/auth";
 import { auth } from "@canva/user";
-import useAppState from "src/useAppState";
+import { RootState } from "src/store";
 
 export const useAuthentication = () => {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
-  const { updateState } = useAppState();
+  const { isAuthenticated, isLoggedOut } = useSelector(
+    (state: RootState) => state.auth
+  );
+  const disptach = useDispatch();
+
+  const verifyToken = async () => {
+    try {
+      setIsAuthenticating(true);
+      const token = await auth.getCanvaUserToken();
+
+      if (!token) return;
+
+      const jsonResponse = await fetch(`${BACKEND_HOST}/verify-token`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const response = await jsonResponse.json();
+
+      if (response?.isAuthenticated) {
+        disptach(setAuth(response));
+      }
+
+      setIsAuthenticating(false);
+    } catch (error) {
+      console.error("Error while authenticating the user: ", error);
+      setIsAuthenticating(false);
+    }
+  };
 
   useEffect(() => {
-    const storedAuth = localStorage.getItem('auth');
-    if(storedAuth) {
-      updateState({ auth: JSON.parse(storedAuth) });
-    } else {
-      initiateAuthenticationFlow();
+    if (!isAuthenticated && !isLoggedOut) {
+      verifyToken();
     }
   }, []);
 
@@ -24,28 +53,6 @@ export const useAuthentication = () => {
       }
     } catch (error) {
       console.error(error);
-    } finally {
-      setIsAuthenticating(false);
-    }
-  };
-
-  const verifyToken = async () => {
-    try {
-      const token = await auth.getCanvaUserToken();
-      if (!token) return;
-
-      const jsonResponse = await fetch(`${BACKEND_HOST}/verify-token`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      
-      const response = await jsonResponse.json();
-      
-      if (response?.isAuthenticated) {
-        updateState({ auth: response });
-        localStorage.setItem('auth', JSON.stringify(response));
-      }
-    } catch (error) {
-      console.error("Error while authenticating the user: ", error);
     } finally {
       setIsAuthenticating(false);
     }

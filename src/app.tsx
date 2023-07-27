@@ -1,26 +1,30 @@
-import React, { useEffect } from "react";
+// App.tsx
+import React,{useEffect} from "react";
 import { Rows, Text } from "@canva/app-ui-kit";
 import styles from "styles/components.css";
 import AuthenticatedApp from "./AuthenticatedApp";
-import useAppState from "./useAppState";
+import { useSelector } from "react-redux";
+import { RootState } from "./store";
 import { useAuthentication } from "./components/authentication/useAuthenticationOlder";
 
-const App: React.FC = () => {
-  const { state } = useAppState();
-  const { initiateAuthenticationFlow } = useAuthentication();
+const App = () => {
+  const auth = useSelector((state: RootState) => state.auth);
+  const {initiateAuthenticationFlow } = useAuthentication();
 
   useEffect(() => {
-    if(!state.auth.isAuthenticated) {
+    if(!auth.isAuthenticated) {
       initiateAuthenticationFlow();
     }
-    console.log(state.auth)
   }, []);
-
   return (
     <div className={styles.scrollContainer}>
       <Rows spacing="2u">
         <Text>To create an NFT, link your wallet,</Text>
-        {state.auth.isAuthenticated ? <AuthenticatedApp /> : <div>this hasn't loaded {state.auth}</div>}
+        {auth.isAuthenticated ? (
+          <AuthenticatedApp />
+        ) : (
+          <div>Loading...</div>
+        )}
       </Rows>
     </div>
   );

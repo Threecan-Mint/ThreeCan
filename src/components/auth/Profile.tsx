@@ -1,16 +1,15 @@
 import React from "react";
 // import { useAuth0, User } from "@auth0/auth0-react";
-import useAppState from "src/useAppState";
+import { useSelector } from "react-redux";
+import { RootState } from "src/store";
 
 interface ProfileProps {}
 
 const Profile = (props: ProfileProps) => {
   // const { user, isAuthenticated, isLoading } = useAuth0<User>();
-  const {
-    state: {
-      auth: { isAuthenticated, data },
-    },
-  } = useAppState();
+  const { isAuthenticated, data } = useSelector(
+    (state: RootState) => state.auth
+  );
 
   // if (isLoading) {
   //   return <div>Loading ...</div>;
@@ -18,7 +17,6 @@ const Profile = (props: ProfileProps) => {
 
   return isAuthenticated && data ? (
     <div>
-      <img src={data?.picture} alt={data?.name} />
       <h2>{data?.name}</h2>
       <p>{data?.email}</p>
     </div>

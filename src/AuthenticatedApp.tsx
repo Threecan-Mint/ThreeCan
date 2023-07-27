@@ -11,7 +11,7 @@ import { Rows, Text } from "@canva/app-ui-kit";
 
 const AuthenticatedApp: React.FC = () => {
   const { state, updateState } = useAppState();
-  console.log("Authenticated State:",state.auth)
+
   return (
     <>
       <Text>To create an NFT, link your wallet,</Text>

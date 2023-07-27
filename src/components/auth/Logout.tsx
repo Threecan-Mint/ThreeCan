@@ -1,18 +1,36 @@
-import { useAuth0 } from "@auth0/auth0-react";
+import { auth } from "@canva/user";
 import React from "react";
+import { useDispatch } from "react-redux";
+import { logOut } from "src/store/slices/auth";
 
 const LogoutButton = () => {
-  const { logout } = useAuth0();
+  const dispatch = useDispatch();
+  const GCF_LOG_OUT_URL =
+    "https://us-central1-atomic-saga-392809.cloudfunctions.net/logout";
 
-  return (
-    <button
-      onClick={() =>
-        logout({ logoutParams: { returnTo: window.location.origin } })
+  const onLogOut = async () => {
+    try {
+      const token = await auth.getCanvaUserToken();
+
+      if (!token) return;
+
+      const jsonResponse = await fetch(GCF_LOG_OUT_URL, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const response = await jsonResponse.json();
+      if (response) {
+        dispatch(logOut());
       }
-    >
-      Log Out
-    </button>
-  );
+    } catch (error) {
+      console.log("Error while logout: ", error);
+      dispatch(logOut());
+    }
+  };
+
+  return <button onClick={onLogOut}>Log Out</button>;
 };
 
 export default LogoutButton;
