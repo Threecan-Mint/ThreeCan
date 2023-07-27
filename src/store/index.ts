@@ -1,4 +1,4 @@
-// packages
+// Import dependencies
 import { configureStore } from "@reduxjs/toolkit";
 import {
   persistReducer,
@@ -14,17 +14,17 @@ import storage from "redux-persist/lib/storage";
 //
 import rootReducer from "./rootReducer";
 
-// presist config
+// Define the persist configuration
 const persistConfig = {
   key: "root",
   storage,
   whitelist: ["auth"],
 };
 
-// presisted reducer
+// Create a persisted reducer
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-// store
+// Configure the store
 const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
@@ -36,10 +36,11 @@ const store = configureStore({
   devTools: process.env.NODE_ENV !== "production",
 });
 
-// root type
+// Define the RootState type
 export type RootState = ReturnType<typeof store.getState>;
 
-// persistor
+// Create a persistor
 export const persistor = persistStore(store);
 
+// Export the store
 export default store;
