@@ -1,7 +1,6 @@
 // App.tsx
 import React,{useEffect} from "react";
 import { Rows, Text } from "@canva/app-ui-kit";
-import LoginButton from "./components/auth/Login";
 import styles from "styles/components.css";
 import AuthenticatedApp from "./AuthenticatedApp";
 import { useSelector } from "react-redux";
