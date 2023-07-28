@@ -1,22 +1,20 @@
-import { useEffect, useState } from "react";
-import { initiateCanvaAuthenticationFlow } from "./canvaAuth";
-import { useAuth0Auth } from "./auth0Auth";
-import useAppState from "../../useAppState";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "src/store";
+import { useCanvaAuth } from './canvaAuth';
+import { useAuth0Auth } from './auth0Auth';
 
 export const useAuthentication = () => {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
-  const { updateState } = useAppState();
+  const { isAuthenticated, isLoggedOut } = useSelector((state: RootState) => state.auth);
+  const { initiateCanvaAuthenticationFlow } = useCanvaAuth();
   const { verifyAuth0Token } = useAuth0Auth();
 
   useEffect(() => {
     const checkAuthState = async () => {
       setIsAuthenticating(true);
       try {
-        const authStateFromLocalStorage = localStorage.getItem('auth');
-        if (authStateFromLocalStorage) {
-          const parsedState = JSON.parse(authStateFromLocalStorage);
-          updateState({ auth: parsedState });
-        } else {
+        if (!isAuthenticated && !isLoggedOut) {
           const canvaAuthenticated = await initiateCanvaAuthenticationFlow();
           if (canvaAuthenticated) {
             await verifyAuth0Token();
@@ -26,6 +24,7 @@ export const useAuthentication = () => {
         setIsAuthenticating(false);
       }
     };
+
     checkAuthState();
   }, []);
 
