@@ -19,7 +19,6 @@ const App = () => {
   return (
     <div className={styles.scrollContainer}>
       <Rows spacing="2u">
-        <Text>To create an NFT, link your wallet,</Text>
         {auth.isAuthenticated ? (
           <AuthenticatedApp />
         ) : (
