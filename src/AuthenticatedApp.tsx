@@ -13,20 +13,23 @@ const AuthenticatedApp: React.FC = () => {
   const { state, updateState } = useAppState();
 
   return (
-    <>
-      <Text>To create an NFT, link your wallet,</Text>
+    <Rows spacing={"2u"}>
+      <div>
       <Profile />
-      <LogoutButton />
       <WalletConnection
         walletAddress={state.walletAddress}
         setWalletAddress={(address) => updateState({ walletAddress: address })}
       />
+      </div>
+      <div>
       <ExportDesign setExportedFile={(file) => updateState({ exportData: file })} />
+
       <NFTForm
         exportedFile={state.exportData}
         walletAddress={state.walletAddress}
         paymentStatus={"true"} // Assuming you have this in your state
       />
+      </div>
       {state.exportData && (
         <FormField
           label="Export response"
@@ -36,7 +39,8 @@ const AuthenticatedApp: React.FC = () => {
           )}
         />
       )}
-    </>
+            <LogoutButton />
+    </Rows>
   );
 };
 
