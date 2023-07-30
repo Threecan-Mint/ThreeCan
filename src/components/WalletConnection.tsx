@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import ConnectButton from './wallet/ConnectButton';
 import WalletInfo from './wallet/WalletInfo';
 import { useEthereum } from './wallet/useEthereum';
+import { Rows, Text } from "@canva/app-ui-kit";
 
 interface WalletConnectionProps {
   walletAddress: string | null;
@@ -25,16 +26,16 @@ const WalletConnection: React.FC<WalletConnectionProps> = ({ walletAddress, setW
   }, [connectToEthereum, setWalletAddress]);
 
   return (
-    <div>
+    <Rows spacing ={"0.5u"}>
       {isLoading ? (
-        <p>Loading...</p>
+        <Text>Loading...</Text>
       ) : (
         <>
           <ConnectButton setWalletAddress={setWalletAddress} />
           <WalletInfo walletAddress={walletAddress} />
         </>
       )}
-    </div>
+    </Rows>
   );
 };
 

@@ -10,23 +10,26 @@ import useAppState from "./useAppState";
 import { Rows, Text } from "@canva/app-ui-kit";
 
 const AuthenticatedApp: React.FC = () => {
-  const { state, setExportData, setWalletAddress } = useAppState();
+  const { state, updateState } = useAppState();
 
   return (
-    <>
-      <Text>To create an NFT, link your wallet,</Text>
+    <Rows spacing={"2u"}>
+      <div>
       <Profile />
-      <LogoutButton />
       <WalletConnection
         walletAddress={state.walletAddress}
-        setWalletAddress={setWalletAddress}
+        setWalletAddress={(address) => updateState({ walletAddress: address })}
       />
-      <ExportDesign setExportedFile={setExportData} />
+      </div>
+      <div>
+      <ExportDesign setExportedFile={(file) => updateState({ exportData: file })} />
+
       <NFTForm
         exportedFile={state.exportData}
         walletAddress={state.walletAddress}
         paymentStatus={"true"} // Assuming you have this in your state
       />
+      </div>
       {state.exportData && (
         <FormField
           label="Export response"
@@ -36,7 +39,8 @@ const AuthenticatedApp: React.FC = () => {
           )}
         />
       )}
-    </>
+            <LogoutButton />
+    </Rows>
   );
 };
 

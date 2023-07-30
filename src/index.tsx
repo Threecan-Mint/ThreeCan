@@ -4,6 +4,10 @@ import { createRoot } from "react-dom/client";
 import App from "./app";
 import "@canva/app-ui-kit/styles.css";
 import { Auth0Provider } from "@auth0/auth0-react";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+// store
+import store, { persistor } from "./store";
 
 const root = createRoot(document.getElementById("root")!);
 function render() {
@@ -16,7 +20,11 @@ function render() {
           redirect_uri: window.location.origin,
         }}
       >
-        <App />
+        <Provider store={store}>
+          <PersistGate persistor={persistor} loading={null}>
+            <App />
+          </PersistGate>
+        </Provider>
       </Auth0Provider>
     </AppUiProvider>
   );

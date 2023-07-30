@@ -1,18 +1,10 @@
 import { useState } from "react";
 
-interface Auth {
-  isAuthenticated: boolean;
-  data?: {
-    [key: string]: string;
-  };
-}
-
 interface AppState {
   isLoading: boolean;
   exportData: File | null;
   responseData: any;
   walletAddress: string | null;
-  auth: Auth;
 }
 
 const useAppState = () => {
@@ -21,40 +13,13 @@ const useAppState = () => {
     exportData: null,
     responseData: null,
     walletAddress: null,
-    auth: {
-      isAuthenticated: false,
-      data: {},
-    },
   });
 
-  const setExportData = (data: File | null) => {
-    setState((prevState) => ({ ...prevState, exportData: data }));
+  const updateState = (newState: Partial<AppState>) => {
+    setState(prevState => ({ ...prevState, ...newState }));
   };
 
-  const setResponseData = (data: any) => {
-    setState((prevState) => ({ ...prevState, responseData: data }));
-  };
-
-  const setWalletAddress = (address: string | null) => {
-    setState((prevState) => ({ ...prevState, walletAddress: address }));
-  };
-
-  const setIsLoading = (isLoading: boolean) => {
-    setState((prevState) => ({ ...prevState, isLoading }));
-  };
-
-  const setAuth = (auth: Auth) => {
-    setState((prevState) => ({ ...prevState, auth }));
-  };
-
-  return {
-    state,
-    setExportData,
-    setResponseData,
-    setWalletAddress,
-    setIsLoading,
-    setAuth,
-  };
+  return { state, updateState };
 };
 
 export default useAppState;
