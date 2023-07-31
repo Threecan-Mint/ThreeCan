@@ -5,6 +5,7 @@ interface AppState {
   exportData: File | null;
   responseData: any;
   walletAddress: string | null;
+  credits: number;
 }
 
 const useAppState = () => {
@@ -13,6 +14,7 @@ const useAppState = () => {
     exportData: null,
     responseData: null,
     walletAddress: null,
+    credits: 0,
   });
 
   const updateState = (newState: Partial<AppState>) => {

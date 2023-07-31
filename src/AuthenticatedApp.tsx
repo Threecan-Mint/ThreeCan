@@ -8,6 +8,7 @@ import Profile from "./components/auth/Profile";
 import LogoutButton from "./components/auth/Logout";
 import useAppState from "./useAppState";
 import { Rows, Text } from "@canva/app-ui-kit";
+import StripeCheckoutButton from "./components/StripeCheckoutButton";
 
 const AuthenticatedApp: React.FC = () => {
   const { state, updateState } = useAppState();
@@ -23,7 +24,7 @@ const AuthenticatedApp: React.FC = () => {
       </div>
       <div>
       <ExportDesign setExportedFile={(file) => updateState({ exportData: file })} />
-
+      <StripeCheckoutButton />
       <NFTForm
         exportedFile={state.exportData}
         walletAddress={state.walletAddress}
