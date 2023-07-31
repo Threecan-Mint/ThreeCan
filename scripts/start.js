@@ -37,10 +37,6 @@ const BACKEND_URL = `http://localhost:${CANVA_BACKEND_PORT}`;
 const getFrontendUrl = (protocol) =>
   `${protocol}://localhost:${CANVA_FRONTEND_PORT}`;
 
-if (!fs.existsSync(EXAMPLES_DIR)) {
-  throw new Error(`Directory does not exist: ${EXAMPLES_DIR}`);
-}
-
 if (!CANVA_FRONTEND_PORT) {
   throw new Error("CANVA_FRONTEND_PORT environment variable is not defined");
 }
@@ -94,7 +90,7 @@ async function start() {
   }
 
   let backendHost = CANVA_BACKEND_HOST;
-  if (!backendHost || backendHost.trim() === '') {
+  if (!backendHost || backendHost.trim() === "") {
     backendHost = BACKEND_URL;
   }
 
@@ -114,7 +110,8 @@ async function start() {
     if (!CANVA_APP_ID) {
       throw new Error(
         `'CANVA_APP_ID' environment variable is undefined. Refer to the instructions in the README.md on starting a backend example.
-      `);
+      `
+      );
     }
 
     await new Promise((resolve) => {
@@ -142,10 +139,7 @@ async function start() {
         : BACKEND_URL;
       table.push(["Base URL (Backend)", chalk.cyan(url)]);
     } catch (error) {
-      console.log(
-        chalk.bold.bgRed("Error:"),
-        "Unable to start ngrok server."
-      );
+      console.log(chalk.bold.bgRed("Error:"), "Unable to start ngrok server.");
     }
   }
 
