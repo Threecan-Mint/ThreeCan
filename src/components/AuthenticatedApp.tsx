@@ -3,10 +3,13 @@ import { FormField, MultilineInput, Rows } from "@canva/app-ui-kit";
 import ProfileSection from "./sections/ProfileSection";
 import CheckoutSection from "./sections/CheckoutSection";
 import LogoutButton from "./sections/profile/details/Logout";
-import useAppState from "./useAppState";
+import { AppState } from "./types";
+interface AuthenticatedAppProps {
+  state: AppState;
+  updateState: (newState: Partial<AppState>) => void;
+}
 
-const AuthenticatedApp: React.FC = () => {
-  const { state, updateState } = useAppState();
+const AuthenticatedApp: React.FC<AuthenticatedAppProps> = ({ state, updateState }) => {
 
   return (
     <Rows spacing={"2u"}>

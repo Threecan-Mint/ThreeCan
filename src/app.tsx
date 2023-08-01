@@ -8,7 +8,7 @@ import { RootState } from "./store";
 import { useAuthentication } from "./components/authentication/useAuthenticationOlder";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-import useAppState from "./useAppState";
+import useAppState from "./components/useAppState";
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
