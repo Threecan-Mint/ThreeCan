@@ -4,6 +4,7 @@ import ProfileSection from "./sections/ProfileSection";
 import CheckoutSection from "./sections/CheckoutSection";
 import LogoutButton from "./sections/profile/details/Logout";
 import { AppState } from "./types";
+
 interface AuthenticatedAppProps {
   state: AppState;
   updateState: (newState: Partial<AppState>) => void;
