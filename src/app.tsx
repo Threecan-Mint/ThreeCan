@@ -1,57 +1,24 @@
-// App.tsx
-import React, { useEffect, useState } from "react";
-import { Rows, Text } from "@canva/app-ui-kit";
-import styles from "styles/components.css";
-import AuthenticatedApp from "./components/AuthenticatedApp";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "./store";
-import { useAuthentication } from "./components/authentication/useAuthenticationOlder";
-import { loadStripe } from "@stripe/stripe-js";
+import React from "react";
 import { Elements } from "@stripe/react-stripe-js";
+import AuthWrapper from "./components/providers/AuthWrapper";
+import StripeProvider from "./components/providers/StripeProvider";
 import useAppState from "./components/useAppState";
-
-// Make sure to call loadStripe outside of a component’s render to avoid
-// recreating the Stripe object on every render.
-// This is your test publishable API key.
-const stripePromise = loadStripe(
-  "pk_test_51NObRaDWbmSOfM6E1q6592Pf53DrVmiAFaLKNz2E0RsxqgEjsWnZ6DZEYt47NNZv79FPCI3jFePLPQjSje9Uzfik00osAUT5E9"
-);
+import styles from "styles/components.css";
+import loadStripePromise from "./components/providers/stripe";
+import AuthenticatedApp from "./components/AuthenticatedApp";
 
 const App = () => {
-  const { state, updateState } = useAppState(); // Moved to App level
-
-  const dispatch = useDispatch();
-  const auth = useSelector((state: RootState) => state.auth);
-  const clientSecret = useSelector(
-    (state: RootState) => state.payment.clientSecret
-  );
-  const { initiateAuthenticationFlow } = useAuthentication();
-
-  useEffect(() => {
-    if (!auth.isAuthenticated) {
-      initiateAuthenticationFlow();
-    }
-  }, []);
-
-  useEffect(() => {
-    fetch("/create-payment-intent", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items: [{ id: "xl-tshirt" }] }),
-    })
-      .then((res) => res.json())
-      .then((data) => dispatch(data.clientSecret));
-  }, []);
+  const { state, updateState } = useAppState();
 
   return (
     <div className={styles.scrollContainer}>
-      <Rows spacing="2u">
-        {auth.isAuthenticated && clientSecret && (
-          <Elements stripe={stripePromise}>
-            <AuthenticatedApp state={state} updateState={updateState} /> 
-          </Elements>
-        )}
-      </Rows>
+      <AuthWrapper>
+        <Elements stripe={loadStripePromise}>
+          <StripeProvider>
+            <AuthenticatedApp state={state} updateState={updateState} />
+          </StripeProvider>
+        </Elements>
+      </AuthWrapper>
     </div>
   );
 };

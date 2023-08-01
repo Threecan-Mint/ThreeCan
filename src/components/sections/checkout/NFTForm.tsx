@@ -9,7 +9,7 @@ import { FormSubmitProps } from './form/useFormSubmit';
 interface NFTFormComponentProps extends Omit<FormSubmitProps, 'formValues' | 'onFormSubmit'> {
   walletAddress: string | null;
   exportedFile: File | null;
-  paymentStatus: string;
+  paymentStatus: boolean; // Change this to boolean
 }
 
 export const NFTForm: FC<NFTFormComponentProps> = ({ walletAddress, exportedFile, paymentStatus, ...formSubmitProps }) => {
@@ -23,7 +23,7 @@ export const NFTForm: FC<NFTFormComponentProps> = ({ walletAddress, exportedFile
   };
 
   const { formValues, handleInputChange } = useForm(initialFormState);
-  const handleFormSubmit = useFormSubmit({ ...formSubmitProps, formValues, walletAddress, exportedFile });
+  const handleFormSubmit = useFormSubmit({ ...formSubmitProps, formValues, walletAddress, exportedFile, paymentStatus }); // Pass paymentStatus here
 
   return (
     <form onSubmit={handleFormSubmit}>
