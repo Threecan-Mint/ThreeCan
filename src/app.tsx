@@ -8,6 +8,7 @@ import { RootState } from "./store";
 import { useAuthentication } from "./components/authentication/useAuthenticationOlder";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
+import useAppState from "./useAppState";
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
@@ -17,6 +18,8 @@ const stripePromise = loadStripe(
 );
 
 const App = () => {
+  const { state, updateState } = useAppState(); // Moved to App level
+
   const dispatch = useDispatch();
   const auth = useSelector((state: RootState) => state.auth);
   const clientSecret = useSelector(
@@ -45,7 +48,7 @@ const App = () => {
       <Rows spacing="2u">
         {auth.isAuthenticated && clientSecret && (
           <Elements stripe={stripePromise}>
-            <AuthenticatedApp />
+            <AuthenticatedApp state={state} updateState={updateState} /> 
           </Elements>
         )}
       </Rows>
