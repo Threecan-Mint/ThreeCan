@@ -12,7 +12,7 @@ const paymentSlice = createSlice({
   name: "payment",
   initialState,
   reducers: {
-    setClientSecret: (state, action: PayloadAction<string>) => {
+    setClientSecret: (state, action: PayloadAction<string | null>) => {
       state.clientSecret = action.payload;
     },
   },
