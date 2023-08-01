@@ -1,12 +1,6 @@
 import { useState } from "react";
+import { AppState } from "./types";
 
-interface AppState {
-  isLoading: boolean;
-  exportData: File | null;
-  responseData: any;
-  walletAddress: string | null;
-  credits: number;
-}
 
 const useAppState = () => {
   const [state, setState] = useState<AppState>({
