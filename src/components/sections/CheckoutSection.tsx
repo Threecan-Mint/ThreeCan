@@ -9,7 +9,10 @@ interface CheckoutSectionProps {
   updateExportedFile: (file: any) => void; // Define the type of 'file' appropriately
 }
 
-const CheckoutSection: React.FC<CheckoutSectionProps> = ({ state, updateExportedFile }) => (
+const CheckoutSection: React.FC<CheckoutSectionProps> = ({
+  state,
+  updateExportedFile,
+}) => (
   <div>
     <ExportDesign setExportedFile={updateExportedFile} />
     <NFTForm

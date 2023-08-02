@@ -10,8 +10,10 @@ interface AuthenticatedAppProps {
   updateState: (newState: Partial<AppState>) => void;
 }
 
-const AuthenticatedApp: React.FC<AuthenticatedAppProps> = ({ state, updateState }) => {
-
+const AuthenticatedApp: React.FC<AuthenticatedAppProps> = ({
+  state,
+  updateState,
+}) => {
   return (
     <Rows spacing={"2u"}>
       <ProfileSection
