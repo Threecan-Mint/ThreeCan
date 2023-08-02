@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
-import useForm from './form/useForm';
+import useForm from './form/ui/useForm';
 import useFormSubmit from './form/useFormSubmit';
-import { TextField } from './form/TextField';
-import { SelectField } from './form/SelectField';
-import { FormFields } from './form/useForm';
+import { TextField } from './form/ui/TextField';
+import { SelectField } from './form/ui/SelectField';
+import { FormFields } from './form/ui/useForm';
 import { FormSubmitProps } from './form/useFormSubmit';
 
 interface NFTFormComponentProps extends Omit<FormSubmitProps, 'formValues' | 'onFormSubmit'> {

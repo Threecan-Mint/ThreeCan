@@ -1,5 +1,5 @@
 // mintAPI.tsx
-import { FormFields } from './useForm';
+import { FormFields } from './ui/useForm';
 
 export const mintNFT = async (
 //   authToken: string,

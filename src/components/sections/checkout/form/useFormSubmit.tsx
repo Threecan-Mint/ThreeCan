@@ -1,6 +1,6 @@
 // useFormSubmit.tsx
 import { FormEvent } from 'react';
-import { FormFields } from './useForm';
+import { FormFields } from './ui/useForm';
 import { mintNFT } from './mintAPI'; // Import the function
 
 export type FormSubmitProps = {
