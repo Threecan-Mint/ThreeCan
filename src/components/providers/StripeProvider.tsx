@@ -8,10 +8,10 @@ const StripeProvider: React.FC = ({ children }) => {
   const clientSecret = useSelector((state: RootState) => state.payment.clientSecret);
 
   useEffect(() => {
-    fetch("/create-payment-intent", {
+    fetch(`${BACKEND_HOST}/stripeIntent`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items: [{ id: "xl-tshirt" }] }),
+      body: JSON.stringify({ items: [{ id: "prod_OMdftDbAItvh3C" }] }),
     })
       .then((res) => res.json())
       .then((data) => dispatch(setClientSecret(data.clientSecret))); // Dispatch the action here
