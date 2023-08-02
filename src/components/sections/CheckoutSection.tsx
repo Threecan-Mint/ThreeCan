@@ -2,7 +2,7 @@
 import React from "react";
 import ExportDesign from "./checkout/ExportDesign";
 import NFTForm from "./checkout/NFTForm";
-import { AppState } from "../types"; // Import or define types as needed
+import { AppState } from "../../types/types"; // Import or define types as needed
 
 interface CheckoutSectionProps {
   state: AppState;

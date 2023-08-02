@@ -3,7 +3,7 @@ import React from "react";
 import WalletConnection from "./profile/WalletConnection";
 import Profile from "./profile/details/Profile";
 import CheckoutForm from "./profile/stripe/CheckoutForm";
-import { AppState } from "../types"; // Import or define types as needed
+import { AppState } from "../../types/types"; // Import or define types as needed
 
 interface ProfileSectionProps {
   state: AppState;

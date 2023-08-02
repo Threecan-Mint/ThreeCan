@@ -3,7 +3,7 @@ import { FormField, MultilineInput, Rows } from "@canva/app-ui-kit";
 import ProfileSection from "./sections/ProfileSection";
 import CheckoutSection from "./sections/CheckoutSection";
 import LogoutButton from "./sections/profile/details/Logout";
-import { AppState } from "./types";
+import { AppState } from "../types/types";
 
 interface AuthenticatedAppProps {
   state: AppState;

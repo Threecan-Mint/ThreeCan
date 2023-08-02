@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AppState } from "./types";
+import { AppState } from "../types/types";
 
 
 const useAppState = () => {
