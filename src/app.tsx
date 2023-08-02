@@ -2,7 +2,7 @@ import React from "react";
 import { Elements } from "@stripe/react-stripe-js";
 import AuthWrapper from "./components/providers/AuthWrapper";
 import StripeProvider from "./components/providers/StripeProvider";
-import useAppState from "./components/useAppState";
+import useAppState from "./state/useAppState";
 import styles from "styles/components.css";
 import loadStripePromise from "./components/providers/stripe";
 import AuthenticatedApp from "./components/AuthenticatedApp";
