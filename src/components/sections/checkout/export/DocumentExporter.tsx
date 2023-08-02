@@ -1,35 +1,46 @@
 import { FC, useEffect } from "react";
-import { ExportResponse, requestExport } from "@canva/design";
+import { ExportFileType, requestExport } from "@canva/design"; // Importing the specific type
 
 interface DocumentExporterProps {
-  setExportedFile: (file: File | null) => void;
-  setExporting: (exporting: boolean) => void;
+  onExportCompleted: (file: File) => void;
+  onExportAborted: () => void;
+  onExportingChange: (exporting: boolean) => void;
 }
 
-export const DocumentExporter: FC<DocumentExporterProps> = ({ setExportedFile, setExporting }) => {
+
+const acceptedFileTypes: ExportFileType[] = ["PNG", "PDF_STANDARD", "JPG", "GIF", "SVG", "VIDEO", "PPTX"] as ExportFileType[]; // Type casting
+
+async function fetchExportedFile(url: string, fileName: string): Promise<File | null> {
+  try {
+    const responseBlob = await fetch(url);
+    const file = new File([await responseBlob.blob()], fileName, { type: 'image/png' });
+    return file;
+  } catch (error) {
+    console.error("Failed to fetch exported file:", error);
+    return null;
+  }
+}
+
+export const DocumentExporter: FC<DocumentExporterProps> = ({ onExportCompleted, onExportAborted, onExportingChange }) => {
   useEffect(() => {
     const exportDocument = async () => {
-      setExporting(true);
-      try {
-        const response: ExportResponse = await requestExport({
-          acceptedFileTypes: ["PNG", "PDF_STANDARD", "JPG", "GIF", "SVG", "VIDEO", "PPTX"],
-        });
+      onExportingChange(true);
+      const response = await requestExport({ acceptedFileTypes });
 
-        // Fetch the file from the URL
-        const responseBlob = await fetch(response.exports[0].url);
-        const file = new File([await responseBlob.blob()], 'exported_design.png', { type: 'image/png' });
-        setExportedFile(file);
-
-      } catch (error) {
-        console.error("Failed to export design:", error);
-        setExportedFile(null);
-      } finally {
-        setExporting(false);
+      if (response.status === "COMPLETED" && response.exportBlobs && response.exportBlobs.length > 0) {
+        // Generate a unique file name or fetch it based on your logic
+        const fileName = `exported_design_${Date.now()}.png`;
+        const file = await fetchExportedFile(response.exportBlobs[0].url, fileName);
+        if (file) onExportCompleted(file);
+      } else {
+        onExportAborted();
       }
+
+      onExportingChange(false);
     };
 
     exportDocument();
-  }, [setExportedFile, setExporting]);
+  }, [onExportCompleted, onExportAborted, onExportingChange]);
 
   return null;
 };
