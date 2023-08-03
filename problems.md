@@ -11,14 +11,14 @@ Priority Order
 ## User Credits (more time)
 - Update database to store credits from user
 - Ensure credits increment and decrement appropriately upon mint of NFT
-# 
+
+## Authentication Fix (unbounded)
+- Refresh token to client needs to be fixed.
+- Works now, but clunky and buggy.
+# Some work left.
 
 ## GCP Function for Minting NFT (less time)
 - Move client side code to GCP Done
 - Pass along client ID and Wallet ID Not Done
 - Create way to do massive amounts of NFTs Think about later
 
-## Fixed Document Exporter
-## Authentication Fix (unbounded)
-- Refresh token to client needs to be fixed.
-- Works now, but clunky and buggy.
